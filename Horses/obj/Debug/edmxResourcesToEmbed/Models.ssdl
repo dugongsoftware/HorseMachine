@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HorseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Horse">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Race">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TrackID" Type="int" Nullable="false" />
+    <Property Name="Start" Type="datetime" Nullable="false" />
+    <Property Name="RaceNumber" Type="int" Nullable="false" />
+    <Property Name="TrackCondition" Type="int" Nullable="false" />
+    <Property Name="TrackRating" Type="int" Nullable="false" />
+    <Property Name="Distance" Type="int" Nullable="false" />
+    <Property Name="WeatherCondition" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Result">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="RaceID" Type="int" Nullable="false" />
+    <Property Name="RunnerID" Type="int" Nullable="false" />
+    <Property Name="RaceTime" Type="time" Precision="7" />
+    <Property Name="Position" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Runners">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HorseName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="Barrier" Type="int" Nullable="false" />
+    <Property Name="RaceID" Type="int" Nullable="false" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Track">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Race_Track">
+    <End Role="Track" Type="Self.Track" Multiplicity="1" />
+    <End Role="Race" Type="Self.Race" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Track">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Race">
+        <PropertyRef Name="TrackID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Result_Runner">
+    <End Role="Runners" Type="Self.Runners" Multiplicity="1" />
+    <End Role="Result" Type="Self.Result" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Runners">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Result">
+        <PropertyRef Name="RunnerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Runners_Horse">
+    <End Role="Horse" Type="Self.Horse" Multiplicity="1" />
+    <End Role="Runners" Type="Self.Runners" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Horse">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Runners">
+        <PropertyRef Name="HorseName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Runners_Race">
+    <End Role="Race" Type="Self.Race" Multiplicity="1" />
+    <End Role="Runners" Type="Self.Runners" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Race">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Runners">
+        <PropertyRef Name="RaceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HorseModelStoreContainer">
+    <EntitySet Name="Horse" EntityType="Self.Horse" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Race" EntityType="Self.Race" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Result" EntityType="Self.Result" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Runners" EntityType="Self.Runners" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Track" EntityType="Self.Track" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Race_Track" Association="Self.FK_Race_Track">
+      <End Role="Track" EntitySet="Track" />
+      <End Role="Race" EntitySet="Race" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Result_Runner" Association="Self.FK_Result_Runner">
+      <End Role="Runners" EntitySet="Runners" />
+      <End Role="Result" EntitySet="Result" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Runners_Horse" Association="Self.FK_Runners_Horse">
+      <End Role="Horse" EntitySet="Horse" />
+      <End Role="Runners" EntitySet="Runners" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Runners_Race" Association="Self.FK_Runners_Race">
+      <End Role="Race" EntitySet="Race" />
+      <End Role="Runners" EntitySet="Runners" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HorseModelStoreContainer" CdmEntityContainer="HorseEntities">
+    <EntitySetMapping Name="Horses">
+      <EntityTypeMapping TypeName="HorseModel.Horse">
+        <MappingFragment StoreEntitySet="Horse">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Races">
+      <EntityTypeMapping TypeName="HorseModel.Race">
+        <MappingFragment StoreEntitySet="Race">
+          <ScalarProperty Name="WeatherCondition" ColumnName="WeatherCondition" />
+          <ScalarProperty Name="Distance" ColumnName="Distance" />
+          <ScalarProperty Name="TrackRating" ColumnName="TrackRating" />
+          <ScalarProperty Name="TrackCondition" ColumnName="TrackCondition" />
+          <ScalarProperty Name="RaceNumber" ColumnName="RaceNumber" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="TrackID" ColumnName="TrackID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tracks">
+      <EntityTypeMapping TypeName="HorseModel.Track">
+        <MappingFragment StoreEntitySet="Track">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Runners">
+      <EntityTypeMapping TypeName="HorseModel.Runner">
+        <MappingFragment StoreEntitySet="Runners">
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="RaceID" ColumnName="RaceID" />
+          <ScalarProperty Name="Barrier" ColumnName="Barrier" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="HorseName" ColumnName="HorseName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Results">
+      <EntityTypeMapping TypeName="HorseModel.Result">
+        <MappingFragment StoreEntitySet="Result">
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="RaceTime" ColumnName="RaceTime" />
+          <ScalarProperty Name="RunnerID" ColumnName="RunnerID" />
+          <ScalarProperty Name="RaceID" ColumnName="RaceID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

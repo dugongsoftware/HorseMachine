@@ -1,0 +1,10 @@
+c:\users\administrator\documents\visual studio 2013\Projects\Horses\Horses\bin\Debug\Horses.exe.config
+c:\users\administrator\documents\visual studio 2013\Projects\Horses\Horses\bin\Debug\Horses.exe
+c:\users\administrator\documents\visual studio 2013\Projects\Horses\Horses\bin\Debug\Horses.pdb
+c:\users\administrator\documents\visual studio 2013\Projects\Horses\Horses\obj\Debug\Horses.exe
+c:\users\administrator\documents\visual studio 2013\Projects\Horses\Horses\obj\Debug\Horses.pdb
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Horses\Horses\bin\Debug\EntityFramework.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Horses\Horses\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Horses\Horses\bin\Debug\EntityFramework.xml
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Horses\Horses\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Horses\Horses\obj\Debug\Horses.csprojResolveAssemblyReference.cache
