@@ -25,9 +25,10 @@ namespace Horses
         public int Barrier { get; set; }
         public int RaceID { get; set; }
         public decimal Weight { get; set; }
+        public int HorseID { get; set; }
     
-        public virtual Horse Horse { get; set; }
         public virtual Race Race { get; set; }
         public virtual ICollection<Result> Results { get; set; }
+        public virtual Horse Horse { get; set; }
     }
 }

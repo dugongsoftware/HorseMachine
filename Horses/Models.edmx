@@ -4,10 +4,10 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="HorseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HorseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Horse">
           <Key>
-            <PropertyRef Name="Name" />
+            <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
@@ -45,6 +45,7 @@
           <Property Name="Barrier" Type="int" Nullable="false" />
           <Property Name="RaceID" Type="int" Nullable="false" />
           <Property Name="Weight" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="HorseID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Track">
           <Key>
@@ -82,10 +83,10 @@
           <End Role="Runners" Type="Self.Runners" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Horse">
-              <PropertyRef Name="Name" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Runners">
-              <PropertyRef Name="HorseName" />
+              <PropertyRef Name="HorseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -129,7 +130,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="HorseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="HorseEntities" annotation:LazyLoadingEnabled="true" >
-          <EntitySet Name="Horses" EntityType="HorseModel.Horse" />
           <EntitySet Name="Races" EntityType="HorseModel.Race" />
           <EntitySet Name="Tracks" EntityType="HorseModel.Track" />
           <AssociationSet Name="FK_Race_Track" Association="HorseModel.FK_Race_Track">
@@ -137,10 +137,6 @@
             <End Role="Race" EntitySet="Races" />
           </AssociationSet>
           <EntitySet Name="Runners" EntityType="HorseModel.Runner" />
-          <AssociationSet Name="FK_Runners_Horse" Association="HorseModel.FK_Runners_Horse">
-            <End Role="Horse" EntitySet="Horses" />
-            <End Role="Runner" EntitySet="Runners" />
-          </AssociationSet>
           <AssociationSet Name="FK_Runners_Race" Association="HorseModel.FK_Runners_Race">
             <End Role="Race" EntitySet="Races" />
             <End Role="Runner" EntitySet="Runners" />
@@ -150,15 +146,12 @@
             <End Role="Runner" EntitySet="Runners" />
             <End Role="Result" EntitySet="Results" />
           </AssociationSet>
+          <EntitySet Name="Horses" EntityType="HorseModel.Horse" />
+          <AssociationSet Name="FK_Runners_Horse" Association="HorseModel.FK_Runners_Horse">
+            <End Role="Horse" EntitySet="Horses" />
+            <End Role="Runner" EntitySet="Runners" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Horse">
-          <Key>
-            <PropertyRef Name="Name" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Runners" Relationship="HorseModel.FK_Runners_Horse" FromRole="Horse" ToRole="Runner" />
-        </EntityType>
         <EntityType Name="Race">
           <Key>
             <PropertyRef Name="ID" />
@@ -204,22 +197,11 @@
           <Property Name="Barrier" Type="Int32" Nullable="false" />
           <Property Name="RaceID" Type="Int32" Nullable="false" />
           <Property Name="Weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <NavigationProperty Name="Horse" Relationship="HorseModel.FK_Runners_Horse" FromRole="Runner" ToRole="Horse" />
           <NavigationProperty Name="Race" Relationship="HorseModel.FK_Runners_Race" FromRole="Runner" ToRole="Race" />
           <NavigationProperty Name="Results" Relationship="HorseModel.FK_Result_Runner" FromRole="Runner" ToRole="Result" />
+          <Property Name="HorseID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Horse" Relationship="HorseModel.FK_Runners_Horse" FromRole="Runner" ToRole="Horse" />
         </EntityType>
-        <Association Name="FK_Runners_Horse">
-          <End Type="HorseModel.Horse" Role="Horse" Multiplicity="1" />
-          <End Type="HorseModel.Runner" Role="Runner" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Horse">
-              <PropertyRef Name="Name" />
-            </Principal>
-            <Dependent Role="Runner">
-              <PropertyRef Name="HorseName" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Runners_Race">
           <End Type="HorseModel.Race" Role="Race" Multiplicity="1" />
           <End Type="HorseModel.Runner" Role="Runner" Multiplicity="*" />
@@ -255,20 +237,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Horse">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Runners" Relationship="HorseModel.FK_Runners_Horse" FromRole="Horse" ToRole="Runner" />
+        </EntityType>
+        <Association Name="FK_Runners_Horse">
+          <End Type="HorseModel.Horse" Role="Horse" Multiplicity="1" />
+          <End Type="HorseModel.Runner" Role="Runner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Horse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Runner">
+              <PropertyRef Name="HorseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HorseModelStoreContainer" CdmEntityContainer="HorseEntities" >
-          <EntitySetMapping Name="Horses">
-            <EntityTypeMapping TypeName="HorseModel.Horse">
-              <MappingFragment StoreEntitySet="Horse">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Races">
             <EntityTypeMapping TypeName="HorseModel.Race">
               <MappingFragment StoreEntitySet="Race">
@@ -294,6 +288,7 @@
           <EntitySetMapping Name="Runners">
             <EntityTypeMapping TypeName="HorseModel.Runner">
               <MappingFragment StoreEntitySet="Runners">
+                <ScalarProperty Name="HorseID" ColumnName="HorseID" />
                 <ScalarProperty Name="Weight" ColumnName="Weight" />
                 <ScalarProperty Name="RaceID" ColumnName="RaceID" />
                 <ScalarProperty Name="Barrier" ColumnName="Barrier" />
@@ -310,6 +305,14 @@
                 <ScalarProperty Name="RaceTime" ColumnName="RaceTime" />
                 <ScalarProperty Name="RunnerID" ColumnName="RunnerID" />
                 <ScalarProperty Name="RaceID" ColumnName="RaceID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Horses">
+            <EntityTypeMapping TypeName="HorseModel.Horse">
+              <MappingFragment StoreEntitySet="Horse">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

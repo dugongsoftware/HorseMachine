@@ -25,10 +25,10 @@ namespace Horses
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Horse> Horses { get; set; }
         public virtual DbSet<Race> Races { get; set; }
         public virtual DbSet<Track> Tracks { get; set; }
         public virtual DbSet<Runner> Runners { get; set; }
         public virtual DbSet<Result> Results { get; set; }
+        public virtual DbSet<Horse> Horses { get; set; }
     }
 }

@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="HorseModelStoreContainer" CdmEntityContainer="HorseEntities">
-    <EntitySetMapping Name="Horses">
-      <EntityTypeMapping TypeName="HorseModel.Horse">
-        <MappingFragment StoreEntitySet="Horse">
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Races">
       <EntityTypeMapping TypeName="HorseModel.Race">
         <MappingFragment StoreEntitySet="Race">
@@ -34,6 +26,7 @@
     <EntitySetMapping Name="Runners">
       <EntityTypeMapping TypeName="HorseModel.Runner">
         <MappingFragment StoreEntitySet="Runners">
+          <ScalarProperty Name="HorseID" ColumnName="HorseID" />
           <ScalarProperty Name="Weight" ColumnName="Weight" />
           <ScalarProperty Name="RaceID" ColumnName="RaceID" />
           <ScalarProperty Name="Barrier" ColumnName="Barrier" />
@@ -50,6 +43,14 @@
           <ScalarProperty Name="RaceTime" ColumnName="RaceTime" />
           <ScalarProperty Name="RunnerID" ColumnName="RunnerID" />
           <ScalarProperty Name="RaceID" ColumnName="RaceID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Horses">
+      <EntityTypeMapping TypeName="HorseModel.Horse">
+        <MappingFragment StoreEntitySet="Horse">
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -20,7 +20,7 @@ namespace Horses
             //counter
             //Int32 horseCounter = 0;
 
-            DateTime startDate = new DateTime(2015, 1, 30);
+            DateTime startDate = new DateTime(2011, 1, 1);
 
             while (startDate < System.DateTime.Now)
             {
@@ -76,17 +76,7 @@ namespace Horses
                                             TrackID = track.ID
                                         };
 
-                                        Console.WriteLine("Adding race {0}", race.RaceNumber);
-
-                                        try
-                                        {
-                                            db.Races.Add(race);
-                                            db.SaveChanges();
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            Console.WriteLine(ex.Message);
-                                        }
+                                        db.Races.Add(race);
 
                                         IEnumerable<XElement> runnerElements = from el in raceElement.Descendants("Runner")
                                                                         select el;
@@ -97,12 +87,13 @@ namespace Horses
                                             {
                                                 Horse horse = new Horse(); // GetHorse(runnerElement);
                                                 Runner runner = new Runner();
-                                                runner.RaceID = race.ID;
+                                                runner.Race = race;
 
                                                 String r = runnerElement.Attribute("RunnerName").Value;
 
-                                                //runner.HorseName = 
-                                                runner.Horse = GetHorse(r);
+                                                Horse dbHorse = GetHorse(r);
+                                                runner.HorseName = dbHorse.Name;
+                                                runner.HorseID = dbHorse.ID;
                                                 runner.Barrier = Convert.ToInt16(runnerElement.Attribute("Barrier").Value);
 
                                                 //    horse.RunnerName = runner.Attribute("RunnerName").Value;
@@ -119,12 +110,24 @@ namespace Horses
                                                 Console.WriteLine("Addding {0}", runner.HorseName);
 
                                                 db.Runners.Add(runner);
-                                                db.SaveChanges();
+
                                             }
                                             catch (Exception ex)
                                             {
                                                 Console.WriteLine(ex.Message);
                                             }
+                                        }
+
+                                        Console.WriteLine("Adding race {0}", race.RaceNumber);
+
+                                        try
+                                        {
+                                            
+                                            db.SaveChanges();
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
                                         }
                                     }
                                     catch (Exception ex)
