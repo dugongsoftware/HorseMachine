@@ -20,7 +20,7 @@ namespace Horses
             //counter
             //Int32 horseCounter = 0;
 
-            DateTime startDate = new DateTime(2015, 1, 24);
+            DateTime startDate = new DateTime(2015, 1, 30);
 
             while (startDate < System.DateTime.Now)
             {
@@ -33,10 +33,9 @@ namespace Horses
                 foreach (XElement meet in meetings)
                 {
                     String venueName = meet.Attribute("VenueName").Value;
+                    
 
-                    Console.WriteLine("{0} on {1}", venueName, startDate);
-
-                    Track track = db.Tracks.First(t => t.Name == venueName);
+                    Track track = db.Tracks.FirstOrDefault(t => t.Name == venueName);
                     if (track != null)
                     {
                         String meetingCode = meet.Attribute("MeetingCode").Value;
@@ -44,6 +43,8 @@ namespace Horses
 
                         for (Int16 i = 1; i <= numberOfRaces; i++)
                         {
+                            Console.WriteLine("{0} R{2} on {1}", venueName, startDate, i);
+
                             try
                             {
                                 XDocument data = XDocument.Load(String.Format("https://tatts.com/pagedata/racing/{0}/{1}/{2}/{3}{4}.xml", startDate.Year, startDate.Month, startDate.Day, meetingCode, i));
@@ -77,8 +78,8 @@ namespace Horses
 
                                         Console.WriteLine("Adding race {0}", race.RaceNumber);
 
-                                        //db.Races.Add(race);
-                                        //db.SaveChanges();
+                                        db.Races.Add(race);
+                                        db.SaveChanges();
 
                                         IEnumerable<XElement> runnerElements = from el in raceElement.Descendants("Runner")
                                                                         select el;
@@ -153,7 +154,7 @@ namespace Horses
         {
             using (HorseEntities db = new HorseEntities())
             {
-                Horse horse = db.Horses.First(h => h.Name == name);
+                Horse horse = db.Horses.FirstOrDefault(h => h.Name == name);
 
                 if (horse == null)
                 {

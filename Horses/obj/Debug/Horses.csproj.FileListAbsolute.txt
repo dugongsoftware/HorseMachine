@@ -11,3 +11,10 @@ C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Horses\Horses\obj\D
 C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\bin\Debug\Horses.exe.config
 C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\obj\Debug\Horses.exe
 C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\obj\Debug\Horses.pdb
+C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\bin\Debug\Horses.exe
+C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\bin\Debug\Horses.pdb
+C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\bin\Debug\EntityFramework.dll
+C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\bin\Debug\EntityFramework.xml
+C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\obj\Debug\Horses.csprojResolveAssemblyReference.cache
