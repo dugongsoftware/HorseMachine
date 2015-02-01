@@ -78,8 +78,15 @@ namespace Horses
 
                                         Console.WriteLine("Adding race {0}", race.RaceNumber);
 
-                                        db.Races.Add(race);
-                                        db.SaveChanges();
+                                        try
+                                        {
+                                            db.Races.Add(race);
+                                            db.SaveChanges();
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
 
                                         IEnumerable<XElement> runnerElements = from el in raceElement.Descendants("Runner")
                                                                         select el;
@@ -158,6 +165,7 @@ namespace Horses
 
                 if (horse == null)
                 {
+                    horse = new Horse();
                     horse.Name = name;
                     db.Horses.Add(horse);
                     db.SaveChanges();
