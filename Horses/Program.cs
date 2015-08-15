@@ -16,7 +16,8 @@ namespace Horses
         {
             GetTimes();
 
-            HorseEntities db = new HorseEntities();
+            //HorseEntities db = new HorseEntities();
+            IRepository db = new EFRepository();
 
             //Give horses an arbitary number
             Dictionary<String, Int32> horses = new Dictionary<string, int>();
@@ -28,7 +29,6 @@ namespace Horses
 
             while (startDate < System.DateTime.Now)
             {
-
                 try
                 {
                     XDocument raceDay = XDocument.Load(String.Format("https://tatts.com/pagedata/racing/{0}/{1}/{2}/RaceDay.xml", startDate.Year, startDate.Month, startDate.Day));
@@ -39,10 +39,9 @@ namespace Horses
                     foreach (XElement meet in meetings)
                     {
                         String venueName = meet.Attribute("VenueName").Value;
+                        Int32 trackId = 0; //db.Tracks.FirstOrDefault(t => t.Name == venueName);
 
-
-                        Track track = db.Tracks.FirstOrDefault(t => t.Name == venueName);
-                        if (track != null)
+                        if (trackId >= 0)
                         {
                             String meetingCode = meet.Attribute("MeetingCode").Value;
                             Int16 numberOfRaces = Convert.ToInt16(meet.Attribute("HiRaceNo").Value);
@@ -79,10 +78,10 @@ namespace Horses
                                                 TrackCondition = Convert.ToInt16(raceElement.Attribute("TrackCond").Value),
                                                 WeatherCondition = Convert.ToInt16(raceElement.Attribute("WeatherCond").Value),
                                                 Start = DateTime.Parse(raceElement.Attribute("RaceTime").Value),
-                                                TrackID = track.ID
+                                                TrackID = trackId
                                             };
 
-                                            db.Races.Add(race);
+                                            db.AddRace(race);
 
                                             IEnumerable<XElement> runnerElements = from el in raceElement.Descendants("Runner")
                                                                                    select el;
@@ -97,7 +96,7 @@ namespace Horses
 
                                                     String r = runnerElement.Attribute("RunnerName").Value;
 
-                                                    Horse dbHorse = GetHorse(r);
+                                                    Horse dbHorse = db.GetHorse(r);
                                                     runner.HorseName = dbHorse.Name;
                                                     runner.HorseID = dbHorse.ID;
                                                     runner.Barrier = Convert.ToInt16(runnerElement.Attribute("Barrier").Value);
@@ -115,7 +114,7 @@ namespace Horses
 
                                                     Console.WriteLine("Addding {0}", runner.HorseName);
 
-                                                    db.Runners.Add(runner);
+                                                    db.AddRunner(runner);
 
                                                 }
                                                 catch (Exception ex)
@@ -128,8 +127,7 @@ namespace Horses
 
                                             try
                                             {
-
-                                                db.SaveChanges();
+                                                //db.SaveChanges();
                                             }
                                             catch (Exception ex)
                                             {
@@ -172,27 +170,7 @@ namespace Horses
             //}
         }
 
-        private static Horse GetHorse(String name)
-        {
-            using (HorseEntities db = new HorseEntities())
-            {
-                Horse horse = db.Horses.FirstOrDefault(h => h.Name == name);
 
-                if (horse == null)
-                {
-                    horse = new Horse();
-                    horse.Name = name;
-                    db.Horses.Add(horse);
-                    db.SaveChanges();
-
-                    return horse;
-                }
-                else
-                {
-                    return horse;
-                }
-            }
-        }
 
         private static void GetTimes()
         {

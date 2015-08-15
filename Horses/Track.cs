@@ -20,6 +20,7 @@ namespace Horses
         }
     
         public int ID { get; set; }
+
         public string Name { get; set; }
     
         public virtual ICollection<Race> Races { get; set; }

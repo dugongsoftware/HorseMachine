@@ -18,3 +18,6 @@ C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\bin\Debug\EntityFram
 C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\bin\Debug\EntityFramework.xml
 C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Administrator\Documents\GitHub\HorseMachine\Horses\obj\Debug\Horses.csprojResolveAssemblyReference.cache
+C:\Users\Lucas Cullen\Downloads\HorseMachine-master\HorseMachine-master\Horses\bin\Debug\Horses.exe.config
+C:\Users\Lucas Cullen\Downloads\HorseMachine-master\HorseMachine-master\Horses\obj\Debug\Horses.exe
+C:\Users\Lucas Cullen\Downloads\HorseMachine-master\HorseMachine-master\Horses\obj\Debug\Horses.pdb
